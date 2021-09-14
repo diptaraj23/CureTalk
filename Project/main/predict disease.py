@@ -54,33 +54,37 @@ def DiseasePrediction(text):
 
     # Disease Prediction
     X_arr = np.array(weight_bool_list)
-    y_pred = loaded_model.predict(X_arr.reshape(1, -1))
-    Predicted_Disease = y_pred[0]
-    print("WE ARE PREDICTING THAT YOU HAVE ------- ",Predicted_Disease.upper())
+    is_all_zero = np.all((X_arr == 0))
+    if is_all_zero:
+        print("Sorry, your symptoms don't match our database.")
+    else:
+        y_pred = loaded_model.predict(X_arr.reshape(1, -1))
+        Predicted_Disease = y_pred[0]
+        print("WE ARE PREDICTING THAT YOU HAVE ------- ", Predicted_Disease.upper())
+        # Disease Description
+        for i in range(len(disease_description)):
+            if (disease_description["Disease"][i] == Predicted_Disease):
+                print("DESCRIPTION OF THE DISEASE : ---- \n")
+                print(disease_description["Description"][i])
 
-    #Disease Description
-    for i in range(len(disease_description)):
-        if(disease_description["Disease"][i] == Predicted_Disease):
-            print("DESCRIPTION OF THE DISEASE : ---- \n")
-            print(disease_description["Description"][i])
+        # Disease Precaution
+        for i in range(len(disease_precaution)):
+            if (disease_precaution["Disease"][i] == Predicted_Disease):
+                print("PRECAUTUIONs OF THE DISEASE : ---- \n")
+                print("PRECAUTUION 1")
+                print(disease_precaution["Precaution_1"][i])
+                print("################# \n")
+                print("PRECAUTUION 2")
+                print(disease_precaution["Precaution_2"][i])
+                print("################# \n")
+                print("PRECAUTUION 3")
+                print(disease_precaution["Precaution_3"][i])
+                print("################# \n")
+                print("PRECAUTUION 4")
+                print(disease_precaution["Precaution_4"][i])
+                print("################# \n")
 
-    # Disease Precaution
-    for i in range(len(disease_precaution)):
-        if(disease_precaution["Disease"][i] == Predicted_Disease):
-            print("PRECAUTUIONs OF THE DISEASE : ---- \n")
-            print("PRECAUTUION 1")
-            print(disease_precaution["Precaution_1"][i])
-            print("################# \n")
-            print("PRECAUTUION 2")
-            print(disease_precaution["Precaution_2"][i])
-            print("################# \n")
-            print("PRECAUTUION 3")
-            print(disease_precaution["Precaution_3"][i])
-            print("################# \n")
-            print("PRECAUTUION 4")
-            print(disease_precaution["Precaution_4"][i])
-            print("################# \n")
-            
+
 symptoms_by_user = input("Write about your SYMPTOMS: ")
 DiseasePrediction(symptoms_by_user)
 
